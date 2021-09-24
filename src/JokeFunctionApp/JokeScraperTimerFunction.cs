@@ -11,7 +11,7 @@ namespace JokeFunctionApp
     public static class JokeScraperTimerFunction
     {
         [FunctionName("JokeScraperTimerFunction")]
-        public static async Task Run([TimerTrigger("0 */1 * * * *")]TimerInfo myTimer,
+        public static async Task Run([TimerTrigger("0 0 0/5 * * *")]TimerInfo myTimer,
                                     [Queue("joke-queue"), StorageAccount("AzureWebJobsStorage")] ICollector<string> msg, 
                                     ILogger log)
         {
