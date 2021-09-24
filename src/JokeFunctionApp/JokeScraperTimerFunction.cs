@@ -41,9 +41,17 @@ namespace JokeFunctionApp
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(rssString);
-            
 
-            msg.Add("test");
+            var nsManager = new XmlNamespaceManager(xmlDoc.NameTable);
+            nsManager.AddNamespace("f", "http://www.w3.org/2005/Atom");
+
+            var nodes = xmlDoc.DocumentElement.SelectNodes("/f:feed/f:entry", nsManager);
+
+            foreach(XmlNode node in nodes)
+            {
+                msg.Add(node.OuterXml);
+            }
+            
         }
     }
 }
