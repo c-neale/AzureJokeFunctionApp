@@ -1,0 +1,19 @@
+
+# Visual Studio temp/user files
+.vs/
+*.suo
+*.user
+
+# JetBrains Rider
+.idea/
+
+# build/intermediate files
+[Bb]in/
+[Oo]bj/
+
+# Azure Functions localsettings file
+local.settings.json
+
+
+
+
