@@ -18,3 +18,6 @@ The app consists of the following main components
 | JokeServerHttpFunction | When triggered this will grab a joke from the CosmosDB and return it.
 
 
+## Tools
+
+- Visual Studio 2022 (preview)
