@@ -11,20 +11,24 @@ namespace JokeFunctionApp
     public static class JokeScraperTimerFunction
     {
         [FunctionName("JokeScraperTimerFunction")]
-        public static async Task Run([TimerTrigger("0 0 0/5 * * *")]TimerInfo myTimer,
+        public static async Task Run([TimerTrigger("0 0 0/5 * * *"
+#if DEBUG     // look horrible, but allows us to run instantly when debugging instead of waiting on the timer. (https://stackoverflow.com/a/51775445/6795212)
+                , RunOnStartup = true
+#endif       
+                )]TimerInfo myTimer,
                                     [Queue("joke-queue"), StorageAccount("AzureWebJobsStorage")] ICollector<string> msg, 
                                     ILogger log)
         {
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 
-            const string JokeSourceRss = "https://www.reddit.com/r/Jokes/top/.rss?t=day";
+            const string jokeSourceRss = "https://www.reddit.com/r/Jokes/top/.rss?t=day";
 
-            var rssString = string.Empty;
+            string rssString;
             try
             {
                 using (var client = new HttpClient())
                 {
-                    using (var response = await client.GetAsync(JokeSourceRss))
+                    using (var response = await client.GetAsync(jokeSourceRss))
                     {
                         using (HttpContent content = response.Content)
                         {
@@ -35,7 +39,7 @@ namespace JokeFunctionApp
             }
             catch(Exception ex)
             {
-                log.LogError($"Exception fetching url contents [{JokeSourceRss}]");
+                log.LogError($"Exception fetching url contents [{jokeSourceRss}]");
                 return;
             }
 
