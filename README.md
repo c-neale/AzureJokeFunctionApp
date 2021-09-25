@@ -20,4 +20,35 @@ The app consists of the following main components
 
 ## Tools
 
-- Visual Studio 2022 (preview)
+- Visual Studio 2022 (preview) can probably also use VS2019
+
+- Azure Storage emulator		(for dev, you could also just spin up some Azure resources if you want.)
+- Azure CosmosDB emulator		(for dev, you could also just spin up some Azure resources if you want.)
+
+## Dev setup
+
+Create a local.settings.json file in the function app project root, fill in with the following contents.  Make sure to set the Cosmos connection string to point to your CosmosDB instance.
+```
+{
+    "IsEncrypted": false,
+    "Values": {
+        "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+        "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+        "CosmosConnectionString": ""
+    }
+}
+```
+
+## References
+
+[Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+[CosmosDB SQL API](https://docs.microsoft.com/en-us/azure/cosmos-db/sql/sql-api-sdk-dotnet-standard)
+
+
+## Notes
+
+### Cosmos DB connection strings format
+
+```
+AccountEndpoint=<url>; AccountKey=<key>;
+```

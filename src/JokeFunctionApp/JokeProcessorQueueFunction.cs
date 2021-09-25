@@ -7,8 +7,8 @@ namespace JokeFunctionApp
     public static class JokeProcessorQueueFunction
     {
         [FunctionName("JokeProcessorQueueFunction")]
-        public static async Task Run([QueueTrigger("joke-queue", Connection = "")] string myQueueItem, 
-                                [CosmosDB(databaseName: "joke-db", collectionName: "joke-container", ConnectionStringSetting = "")] IAsyncCollector<dynamic> documentsOut,
+        public static async Task Run([QueueTrigger("joke-queue"), StorageAccount("AzureWebJobsStorage")] string myQueueItem, 
+                                [CosmosDB(databaseName: "joke-db", collectionName: "joke-container", CreateIfNotExists = true, ConnectionStringSetting = "CosmosConnectionString")] IAsyncCollector<dynamic> documentsOut,
                                 ILogger log)
         {
             log.LogInformation($"C# Queue trigger function processed: {myQueueItem}");
