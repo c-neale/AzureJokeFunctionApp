@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using System.Xml;
+using JokeFunctionApp.Model;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 
@@ -9,7 +10,7 @@ namespace JokeFunctionApp
     {
         [FunctionName("JokeProcessorQueueFunction")]
         public static async Task Run([QueueTrigger("joke-queue"), StorageAccount("AzureWebJobsStorage")] string myQueueItem, 
-                                [CosmosDB(databaseName: "joke-db",  collectionName: "joke-container", CreateIfNotExists = true, ConnectionStringSetting = "CosmosConnectionString")] IAsyncCollector<dynamic> documentsOut,
+                                [CosmosDB(databaseName: "joke-db",  collectionName: "joke-container", CreateIfNotExists = true, ConnectionStringSetting = "CosmosConnectionString")] IAsyncCollector<JokeItem> documentsOut,
                                 ILogger log)
         {
             //log.LogInformation($"C# Queue trigger function processed: {myQueueItem}");
@@ -26,12 +27,12 @@ namespace JokeFunctionApp
             var contentNode = xmlDoc.SelectSingleNode("/f:entry/f:content", nsManager);
 
             //write to the database!
-            await documentsOut.AddAsync(new
+            await documentsOut.AddAsync(new JokeItem
             {
-                id = idNode.InnerText,
-                date = dateNode.InnerText,
-                title = titleNode.InnerText,
-                content = contentNode.InnerText
+                Id = idNode.InnerText,
+                Date = dateNode.InnerText,
+                Title = titleNode.InnerText,
+                Content = contentNode.InnerText
             });
         }
     }
