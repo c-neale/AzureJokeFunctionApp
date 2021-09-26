@@ -38,7 +38,7 @@ namespace JokeFunctionApp
 
             var rand = new Random((int)DateTime.Now.Ticks);
 
-            var randomJokeIndex = rand.Next(0, jokeList.Count() - 1);
+            var randomJokeIndex = rand.Next(0, jokeList.Count - 1);
             var randomJoke = jokeList[randomJokeIndex];
 
             var sb = new StringBuilder();
@@ -46,9 +46,13 @@ namespace JokeFunctionApp
             sb.Append($"<p>{randomJoke.Title}</p>");
             sb.Append(randomJoke.Content);
 
+
+            var bytes = Encoding.ASCII.GetBytes(sb.ToString());
+            var contentResult = Encoding.UTF8.GetString(bytes);
+
             return new ContentResult
             {
-                Content = sb.ToString(),
+                Content = contentResult,
                 ContentType = "text/html"
             };
         }
