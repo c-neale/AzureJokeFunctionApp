@@ -3,27 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JokeFunctionApp.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace JokeFunctionApp
 {
-    public class JokeItem
-    {
-        [JsonProperty("id")]
-        public string Id {  get; set; }
-        [JsonProperty("date")]
-        public string Date { get; set; }
-        [JsonProperty("title")]
-        public string Title {  get; set; }
-        [JsonProperty("content")]
-        public string Content { get; set; }
-    }
-
     public static class JokeHttpFunction
     {
         [FunctionName("TellMeAJoke")]
@@ -45,7 +33,6 @@ namespace JokeFunctionApp
 
             sb.Append($"<p>{randomJoke.Title}</p>");
             sb.Append(randomJoke.Content);
-
 
             var bytes = Encoding.ASCII.GetBytes(sb.ToString());
             var contentResult = Encoding.UTF8.GetString(bytes);
