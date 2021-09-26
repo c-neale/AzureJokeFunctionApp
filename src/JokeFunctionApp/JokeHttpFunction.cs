@@ -43,9 +43,14 @@ namespace JokeFunctionApp
 
             var sb = new StringBuilder();
 
+            sb.Append($"<p>{randomJoke.Title}</p>");
             sb.Append(randomJoke.Content);
 
-            return new OkObjectResult(sb.ToString());
+            return new ContentResult
+            {
+                Content = sb.ToString(),
+                ContentType = "text/html"
+            };
         }
     }
 }
