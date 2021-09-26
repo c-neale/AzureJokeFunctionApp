@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Xml;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
-using System.Linq;
 
 namespace JokeFunctionApp
 {
